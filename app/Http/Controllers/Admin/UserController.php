@@ -11,18 +11,28 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('can:edit-users');
+    }
+
     public function index()
     {
         $user = new User();
+        $loggedId = intval(Auth::id());
         if(isset($_GET['query']) && ($_GET['query'] != null)){
             $search = $_GET['query'];
             $users = $user->where('name', 'LIKE', '%'.$search.'%')->paginate(5);
-            return view('admin.users.index', ['users' => $users]);
+            return view('admin.users.index', ['users' => $users,
+                'loggedId' => $loggedId
+            ]);
         }
 
         $users = $user->paginate(5);
         return view('admin.users.index', [
-            'users' => $users
+            'users' => $users,
+            'loggedId' => $loggedId
         ]);
     }
 
@@ -47,7 +57,9 @@ class UserController extends Controller
         $user->password = Hash::make($request['password']);
 
         $user->save();
-        return redirect('/painel/users/create')->with('msg', 'Usuário cadastrado com sucesso!')->withInput();
+        return redirect('/painel/users/create')
+            ->with('type', 'alert-success')
+            ->with('msg', 'Usuário cadastrado com sucesso!')->withInput();
 
 
     }
@@ -110,12 +122,19 @@ class UserController extends Controller
         return redirect()->route('users.edit', ['user'=> $user->id])
             ->with('type', 'alert-primary')
             ->with('msg', 'Usuário atualizado com sucesso!');
-
     }
 
 
     public function destroy($id)
     {
+       $loggedId = intval(Auth::id());
 
+       if($loggedId !== intval($id)){
+           $user = User::findOrFail($id);
+           $user->delete();
+       }
+        return redirect()->route('users.index')
+            ->with('type', 'alert-primary')
+            ->with('msg', 'Usuário atualizado com sucesso!');
     }
 }

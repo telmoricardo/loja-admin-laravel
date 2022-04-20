@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\RegisterController;
 use App\Http\Controllers\Admin\SessionController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ProductController;
 
 Route::get('/', [HomeController::class, 'index']);
 
@@ -21,5 +22,7 @@ Route::group(['prefix' => 'painel'],function(){
     Route::post('logout', [SessionController::class, 'destroy'])->name('logout');
 
     Route::resource('users', UserController::class);
+
+    Route::resource('products', ProductController::class);
 
 });

@@ -1,18 +1,18 @@
 @extends('adminlte::page')
 
-@section('title', 'Usuário')
+@section('title', 'Produto')
 
 @section('content_header')
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Posts</h1>
+                    <h1>Produtos</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Lista de Usuários</li>
+                        <li class="breadcrumb-item active">Lista de Produtos</li>
                     </ol>
                 </div>
             </div>
@@ -74,11 +74,11 @@
                                             <td>
                                                 <a href="{{route('users.edit', ['user'=> $user->id])}}" class="btn btn-sm btn-info">Editar</a>
                                                 @if($loggedId !== intval($user->id))
-                                                <form class="d-inline" action="{{ route('users.destroy', ['user'=> $user->id]) }}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-sm btn-danger">Excluir</button>
-                                                </form>
+                                                    <form class="d-inline" action="{{ route('users.destroy', ['user'=> $user->id]) }}" method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-sm btn-danger">Excluir</button>
+                                                    </form>
                                                 @endif
                                             </td>
                                         </tr>

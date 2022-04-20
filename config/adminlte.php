@@ -244,7 +244,13 @@ return [
         [
             'text'        => 'Meus Usuários',
             'url'         => 'painel/users',
-            'icon' => 'fas fa-fw fa-user',
+            'icon'        => 'fas fa-fw fa-user',
+            'can '        => 'edit-users',
+        ],
+        [
+            'text'        => 'Meus Produtos',
+            'url'         => 'painel/products',
+            'icon'        => 'nav-icon fas fa-book',
         ],
         [
             'text'        => 'Minhas Paǵinas',
